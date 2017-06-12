@@ -3,7 +3,7 @@
 
 <head>
 
-<title>timer</title>
+<title>random</title>
 
 <style>
 <!--
@@ -21,39 +21,6 @@ article {
     margin: 30px;
 }
 
-#timer {
-    background-color: lightgrey;
-    width: 300px;
-    height: 300px;
-    margin: 40px auto;
-    position: relative;
-    border-radius: 150px;
-    -webkit-border-radius: 150px;
-    -moz-border-radius: 150px;
-}
-
-#timer-hand {
-    width: 4px;
-    height: 50%;
-    background-color: black;
-    transform-origin: center calc(100% - 2px);
-    position: absolute;
-    top: 2px;
-    right: calc(50% - 2px);
-}
-
-#timer-center {
-    background-color: red;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: calc(50% - 8px);
-    right: calc(50% - 8px);
-    border-radius: 150px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-}
-
 footer {
     font-size: 10px;
 }
@@ -62,37 +29,22 @@ footer {
 
 <script type="text/javascript">
 <!--
-window.onload = function() {
-    timer_hand = document.getElementById('timer-hand');
-    styleSheet = document.styleSheets[0];
-    targetRuleIndex = styleSheet.cssRules.length;
+"use strict"
+
+function onButtonClick() {
+    const from = Number(document.randform.from.value);
+    const to = Number(document.randform.to.value);
+
+    const rand = getRandomInt(from, to);
+
+    document.getElementById('random').textContent = String(rand);
 };
 
-onButtonClick = function() {
-    if(styleSheet.cssRules[targetRuleIndex]) {
-        styleSheet.deleteRule(targetRuleIndex);
-        timer_hand.style.animation = 'none';
-    }
 
-    setTimeout(function() {
-        var time = document.getElementById('time').value;
-        console.log(time);
-        if(time < 1) {
-            return;
-        }
+function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
 
-        var keyframes = `
-            @keyframes rotation {
-                0% {transform: rotate(0deg)}
-                100% {transform: rotate(360deg)}
-            }
-        `;
-
-        styleSheet.insertRule(keyframes, targetRuleIndex);
-        timer_hand.style.animation = 'rotation ' + time + 's linear 1';
-    });
-    return;
-};
+}
 -->
 </script>
 
@@ -100,22 +52,20 @@ onButtonClick = function() {
 
 <body>
 <header>
-    <h1>タイマー</h1>
-    タイマーです。音は出ません。
+    <h1>乱数発生器</h1>
+    指定した範囲内で乱数を発生させます。
 </header>
 <article>
-    <form id="timer-form">
-        <input type="number" id="time"> 秒
-        <input type="button" id="toggle" value="Start" onclick="onButtonClick();" />
+    <form name="randform">
+        <input type="number" name="from"> から
+        <input type="number" name="to"> まで
+        <input type="button" id="gen" value="Gen" onclick="onButtonClick();" />
     </form>
-    <div id='timer'>
-        <div id='timer-hand'></div>
-        <div id='timer-center'></div>
-    </div>
+    <div id='random'></div>
 </article>
 
 <footer>
-    <a href="https://github.com/ix5231/timer">GitHub repo</a>
+    <a href="https://github.com/ix5231/random">GitHub repo</a>
 </footer>
 
 </body>
